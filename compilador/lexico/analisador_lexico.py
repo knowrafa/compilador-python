@@ -1,6 +1,5 @@
-from compilador.lexico.estruturas import TabelaDeSimbolos
+from estruturas import TabelaDeSimbolos
 from estruturas import TOKEN
-import logging
 
 
 class AnalisadorLexico:
