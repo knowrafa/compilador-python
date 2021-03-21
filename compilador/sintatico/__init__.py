@@ -1,0 +1,1 @@
+from .analisador_sintatico import AnalisadorSintatico
