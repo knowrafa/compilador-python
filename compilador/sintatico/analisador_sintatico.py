@@ -1,0 +1,2 @@
+class AnalisadorSintatico:
+    pass
