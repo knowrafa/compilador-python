@@ -27,22 +27,13 @@ class TabelaDeSimbolos:
             'real'
         ]
 
-        self.__token_ids = [
-            TOKEN(classe='Num', lexema='Num'),
-            TOKEN(classe='Literal', lexema='Literal'),
-            TOKEN(classe='id', lexema='id'),
-            TOKEN(classe='Comentário', lexema='Comentário'),
-            TOKEN(classe='EOF', lexema='EOF'),
-            TOKEN(classe='OPR', lexema='OPR'),
-            TOKEN(classe='RCB', lexema='RCB'),
-            TOKEN(classe='OPM', lexema='AB_P'),
-            TOKEN(classe='FC_P', lexema='PT_V'),
-            TOKEN(classe='PT_V', lexema='PT_V'),
-            TOKEN(classe='ERRO', lexema='ERRO')
-        ]
+        self.__token_ids = {}
 
-    def insercao(self):
-        pass
+    def insercao(self, identificador):
+        if not self.__token_ids.get(identificador):
+            self.__token_ids[identificador] = TOKEN(classe='id', lexema=identificador)
+
+        return self.__token_ids[identificador]
 
     def atualizacao(self):
         pass

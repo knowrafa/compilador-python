@@ -1,4 +1,5 @@
-from estruturas import TabelaDeSimbolos
+from compilador.lexico.estruturas import TabelaDeSimbolos
+from estruturas import TOKEN
 import logging
 
 
@@ -11,9 +12,21 @@ class AnalisadorLexico:
         print(self.tabela_de_simbolos.get_palavras_reservadas())
         print(self.tabela_de_simbolos.get_token_ids())
 
-    def scanner(self):
-        return
+    def scanner(self, palavra):
+        # Procedimento para identificar qual o TOKEN
+        token = None
+
+        if token == 'id':
+            return self.tabela_de_simbolos.insercao(identificador=palavra)
+
+        return TOKEN(classe=token, lexema=palavra)
 
 
 analisador = AnalisadorLexico()
 analisador.executar_analisador()
+
+
+arquivo = open('entrada.txt', 'rb')
+for linha in arquivo:
+    for simbolo in linha:
+        print(simbolo)
