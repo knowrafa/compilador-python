@@ -12,9 +12,12 @@ class Scanner:
             'EOF': TOKEN(classe='EOF', lexema='EOF'),
             'OPR': TOKEN(classe='OPR', lexema='OPR'),
             'RCB': TOKEN(classe='RCB', lexema='RCB'),
-            'OPM': TOKEN(classe='OPM', lexema='AB_P'),
-            'FC_P': TOKEN(classe='FC_P', lexema='PT_V'),
+            'OPM': TOKEN(classe='OPM', lexema='OPM'),
+            'AB_P': TOKEN(classe='AB_P', lexema='AB_P'),
+            'FC_P': TOKEN(classe='FC_P', lexema='FC_P'),
             'PT_V': TOKEN(classe='PT_V', lexema='PT_V'),
+            'Vir': TOKEN(classe='Vir', lexema='Vir'),
+            '\s': TOKEN(classe='\s', lexema='\s'),
             'ERRO': TOKEN(classe='ERRO', lexema='ERRO')
         }
 
@@ -32,9 +35,12 @@ class Scanner:
                 'maior': 'q15',
                 'igual': 'q14',
                 'menor': 'q13',
-                'abre_chaves': 'q10',
+                'abre_chave': 'q10',
                 'espaco': 'q0',
-                'operador': 'q18',
+                'mais': 'q18',
+                'menos': 'q18',
+                'divisao': 'q18',
+                'multiplicacao': 'q18',
                 'EOF': 'q12',
             },
             'q1': {
@@ -54,7 +60,8 @@ class Scanner:
             },
             'q4': {
                 'final': False,
-                'mais_ou_menos': 'q5',
+                'mais': 'q5',
+                'menos': 'q5',
                 'digito': 'q6'
             },
             'q5': {
@@ -68,7 +75,7 @@ class Scanner:
             'q7': {
                 'final': False,
                 'ponto': 'q7',
-                'aspas': 'q8',
+                'aspa': 'q8',
             },
             'q8': {
                 'final': True,
@@ -93,7 +100,7 @@ class Scanner:
             },
             'q13': {
                 'final': True,
-                'traco': 'q17',
+                'menos': 'q17',
                 'maior': 'q16',
                 'igual': 'q16'
             },
@@ -130,5 +137,30 @@ class Scanner:
             },
         }
 
+        self.classificacao_estados_finais = {
+            'q0': '\s',
+            'q1': 'Num',
+            'q3': 'Num',
+            'q6': 'Num',
+            'q8': 'Literal',
+            'q9': 'id',
+            'q11': 'Comentario',
+            'q12': 'EOF',
+            'q13': 'OPR',
+            'q14': 'OPR',
+            'q15': 'OPR',
+            'q16': 'OPR',
+            'q17': 'RCB',
+            'q18': 'OPM',
+            'q19': 'AB_P',
+            'q20': 'FC_P',
+            'q21': 'PT_V',
+            'q22': 'Vir',
+            'q23': 'ERRO',
+        }
+
     def get_tokens(self):
         return self.tokens
+
+    def get_tabela(self):
+        return self.tabela_de_transicoes

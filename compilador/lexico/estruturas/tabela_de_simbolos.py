@@ -29,11 +29,13 @@ class TabelaDeSimbolos:
 
         self.__token_ids = {}
 
-    def insercao(self, identificador):
-        if not self.__token_ids.get(identificador):
-            self.__token_ids[identificador] = TOKEN(classe='id', lexema=identificador)
+    def insercao(self, token):
+        self.__token_ids['identificador'] = token
 
-        return self.__token_ids[identificador]
+    def token_exists(self, identificador):
+        if self.__token_ids.get(identificador):
+            return self.__token_ids['identificador']
+        return False
 
     def atualizacao(self):
         pass
