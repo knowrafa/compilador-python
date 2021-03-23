@@ -26,9 +26,12 @@ while linha != 'quit':
         index = 0
         while index < len(linha):
             token, index = analisador.scanner(palavra=linha, index=index)
-            print(token)
+            if token.classe == 'ERRO':
+                print(f"ERRO NA LINHA {linha}, COLUNA {index} ")
+                break
+            else:
+                print(token)
     except Exception as e:
         repr(e)
-        pass
 
 print(tokens)

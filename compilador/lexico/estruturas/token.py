@@ -14,6 +14,6 @@ class TOKEN:
         self.tipo = tipo
 
     def __repr__(self):
-        return self.classe + " | " + self.lexema
+        return "Classe: " + self.classe + " | " + "Lexema: " + self.lexema
 
 

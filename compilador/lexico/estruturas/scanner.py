@@ -44,7 +44,7 @@ class Scanner:
                 'EOF': 'q12',
             },
             'q1': {
-                'final': False,
+                'final': True,
                 'letra_e': 'q4',
                 'digito': 'q1',
                 'ponto': 'q2',
