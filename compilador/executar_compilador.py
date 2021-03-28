@@ -24,30 +24,32 @@ linha = ""
 arquivo = open('erro.mygol', 'r')
 tokens = []
 nr_linha = 0
+
 for linha in arquivo:
     nr_linha += 1
-    try:
-        index = 0
+    index = 0
 
-        while index < len(linha):
-            comeco = index
-            token, index = analisador.scanner(palavra=linha, index=index)
-            final = index
-            nome_linha = "%s: %s-%s ( %s)" % (nr_linha, comeco, final, linha.strip())
+    while index < len(linha):
+        comeco = index
+        token, index = analisador.scanner(palavra=linha, index=index)
+        final = index
+        nome_linha = "%s: %s-%s ( %s)" % (nr_linha, comeco, final, linha.strip())
 
-            if token.classe != 'ERRO':
-                print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
-                               ['Linha', 'Classe', 'Lexema', 'Tipo'],
-                               tablefmt="grid"))
+        if token.classe != 'ERRO':
+            print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
+                           ['Linha', 'Classe', 'Lexema', 'Tipo'],
+                           tablefmt="grid"))
 
-            else:
-                print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
-                               ['Linha', 'Classe', 'Lexema', 'Tipo'],
-                               tablefmt="grid"))
-                print("ERRO: Caractere inválido na linguagem, linha %s, coluna %s" %(nr_linha, final))
+        else:
+            print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
+                           ['Linha', 'Classe', 'Lexema', 'Tipo'],
+                           tablefmt="grid"))
+            print("ERRO: Caractere inválido na linguagem, linha %s, coluna %s" % (nr_linha, final))
 
-    except Exception as e:
-        repr(e)
+            # Pular para a pŕoxima linha caso ache erro
+            # Se não tiver o break, ele procura erros na linha toda
+            break
+
 
 token, index = analisador.scanner(eof=True)
 print(tabulate([['eof', *token.tabular_objeto()]], ['Linha', 'Classe', 'Lexema', 'Tipo'], tablefmt="grid"))
