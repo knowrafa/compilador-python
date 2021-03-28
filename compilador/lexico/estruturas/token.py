@@ -14,6 +14,7 @@ class TOKEN:
         self.tipo = tipo
 
     def __repr__(self):
-        return "Classe: " + self.classe + " | " + "Lexema: " + self.lexema
+        return self.classe + " | " + "Lexema: " + self.lexema + " | " + "Tipo: " + str("Nulo" if not self.tipo else self.tipo)
 
-
+    def tabular_objeto(self):
+        return [self.classe, self.lexema, "null" if not self.tipo else self.tipo]

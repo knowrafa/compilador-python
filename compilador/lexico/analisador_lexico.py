@@ -10,7 +10,7 @@ class AnalisadorLexico:
         pass
 
     @staticmethod
-    def get_chave(caractere, eof=False):
+    def get_chave(caractere='', eof=False):
 
         chave = None
         if eof is True:
@@ -63,7 +63,7 @@ class AnalisadorLexico:
 
         return chave
 
-    def scanner(self, palavra, index=0, eof=False):
+    def scanner(self, palavra='', index=0, eof=False):
         estado_inicial = 'q0'
         estado_atual = estado_inicial
         scanner = Scanner()
@@ -72,20 +72,30 @@ class AnalisadorLexico:
         primeiro_caractere = index
         ultimo_caractere = index
 
-        # palavra = "AWEIUQ=WBEIQWOWE123123OIH12ZHQIEGU212"
+        if eof:
+            chave = self.get_chave(eof=eof)
+            proximo_estado = scanner.tabela_de_transicoes[estado_atual].get(chave, False)
+            estado_atual = proximo_estado
+            if scanner.tabela_de_transicoes[estado_atual].get('final'):
+                tipo_token = scanner.classificacao_estados_finais.get(estado_atual)
+                lexema = palavra[primeiro_caractere:ultimo_caractere]
+
+                token = scanner.tokens.get(tipo_token)
+                token.lexema = 'EOF'
+                return token, ultimo_caractere
 
         tamanho = len(palavra)
         for posicao in range(index, tamanho):
             caractere = palavra[posicao]
             chave = self.get_chave(caractere, eof=eof)
+            ultimo_caractere += 1
             if chave == 'erro':
-                lexema = palavra[primeiro_caractere:ultimo_caractere+1]
+                lexema = palavra[primeiro_caractere:ultimo_caractere]
                 token = scanner.tokens.get('ERRO')
                 token.lexema = lexema
                 return token, ultimo_caractere
 
             # Se retornar algo diferente de False, então existe a transição
-            proximo_estado = scanner.tabela_de_transicoes[estado_atual].get(chave, False)
 
             def verificando_token():
                 if scanner.tabela_de_transicoes[estado_atual].get('final'):
@@ -101,12 +111,18 @@ class AnalisadorLexico:
                         token = scanner.tokens.get(tipo_token)
                         token.lexema = lexema
                     return token, ultimo_caractere
+                else:
+                    lexema = palavra[primeiro_caractere:ultimo_caractere]
+                    token = scanner.tokens.get('ERRO')
+                    token.lexema = lexema
+                    return token, ultimo_caractere
 
+            proximo_estado = scanner.tabela_de_transicoes[estado_atual].get(chave, False)
             if proximo_estado:
                 estado_atual = proximo_estado
-                ultimo_caractere += 1
                 if ultimo_caractere == len(palavra):
                     return verificando_token()
 
             else:
+                ultimo_caractere -= 1
                 return verificando_token()

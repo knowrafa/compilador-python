@@ -1,10 +1,11 @@
+from tabulate import tabulate
+
 from lexico import AnalisadorLexico
 
 analisador = AnalisadorLexico()
 analisador.executar_analisador()
 
 # arquivo = open('entrada.txt', 'rb')
-arquivo = ""
 i = 0
 tokens = []
 '''
@@ -20,18 +21,35 @@ for linha in arquivo:
         pass
 '''
 linha = ""
-while linha != 'quit':
-    linha = input("-> ")
+arquivo = open('erro.mygol', 'r')
+tokens = []
+nr_linha = 0
+for linha in arquivo:
+    nr_linha += 1
     try:
         index = 0
+
         while index < len(linha):
+            comeco = index
             token, index = analisador.scanner(palavra=linha, index=index)
-            if token.classe == 'ERRO':
-                print(f"ERRO NA LINHA {linha}, COLUNA {index} ")
-                break
+            final = index
+            nome_linha = "%s: %s-%s ( %s)" % (nr_linha, comeco, final, linha.strip())
+
+            if token.classe != 'ERRO':
+                print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
+                               ['Linha', 'Classe', 'Lexema', 'Tipo'],
+                               tablefmt="grid"))
+
             else:
-                print(token)
+                print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
+                               ['Linha', 'Classe', 'Lexema', 'Tipo'],
+                               tablefmt="grid"))
+                print("ERRO: Caractere inválido na linguagem, linha %s, coluna %s" %(nr_linha, final))
+
     except Exception as e:
         repr(e)
 
-print(tokens)
+token, index = analisador.scanner(eof=True)
+print(tabulate([['eof', *token.tabular_objeto()]], ['Linha', 'Classe', 'Lexema', 'Tipo'], tablefmt="grid"))
+arquivo.close()
+# print(tokens)
