@@ -6,7 +6,6 @@ from tabulate import tabulate
 from lexico import AnalisadorLexico
 
 analisador = AnalisadorLexico()
-analisador.executar_analisador()
 
 # arquivo = open('entrada.txt', 'rb')
 i = 0
@@ -52,7 +51,7 @@ for linha in arquivo:
             # Se não tiver o break, ele procura erros na linha toda
             break
 
-token, index = analisador.scanner(eof=True)
+token, index, _ = analisador.scanner(eof=True)
 print('-----------------------------------------------------------------------')
 print(
     colored("Linha: %s => Classe: %s, Lexema: %s, Tipo: %s" % (
