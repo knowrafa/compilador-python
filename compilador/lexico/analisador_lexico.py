@@ -93,7 +93,10 @@ class AnalisadorLexico:
                 lexema = palavra[primeiro_caractere:ultimo_caractere]
                 token = scanner.tokens.get('ERRO')
                 token.lexema = lexema
-                return token, ultimo_caractere
+                estado_atual = 'q23'
+                token.classe = scanner.classificacao_erros.get(estado_atual).get('classe')
+                mensagem = scanner.classificacao_erros.get(estado_atual).get('mensagem')
+                return token, ultimo_caractere, mensagem
 
             # Se retornar algo diferente de False, então existe a transição
 
@@ -110,12 +113,14 @@ class AnalisadorLexico:
                     else:
                         token = scanner.tokens.get(tipo_token)
                         token.lexema = lexema
-                    return token, ultimo_caractere
+                    return token, ultimo_caractere, None
                 else:
                     lexema = palavra[primeiro_caractere:ultimo_caractere]
                     token = scanner.tokens.get('ERRO')
+                    token.classe = scanner.classificacao_erros.get(estado_atual).get('classe')
                     token.lexema = lexema
-                    return token, ultimo_caractere
+                    mensagem = scanner.classificacao_erros.get(estado_atual).get('mensagem')
+                    return token, ultimo_caractere, mensagem
 
             proximo_estado = scanner.tabela_de_transicoes[estado_atual].get(chave, False)
             if proximo_estado:

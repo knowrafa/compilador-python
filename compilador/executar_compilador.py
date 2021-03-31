@@ -1,3 +1,6 @@
+import logging
+from termcolor import colored
+import coloredlogs
 from tabulate import tabulate
 
 from lexico import AnalisadorLexico
@@ -25,33 +28,37 @@ arquivo = open('erro.mygol', 'r')
 tokens = []
 nr_linha = 0
 
+logger = logging.getLogger(__name__)
+# coloredlogs.install(level='DEBUG', logger=logger)
 for linha in arquivo:
     nr_linha += 1
     index = 0
 
     while index < len(linha):
         comeco = index
-        token, index = analisador.scanner(palavra=linha, index=index)
+        token, index, mensagem = analisador.scanner(palavra=linha, index=index)
         final = index
-        nome_linha = "%s: %s-%s ( %s)" % (nr_linha, comeco, final, linha.strip())
+        nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
+        print('-----------------------------------------------------------------------')
 
-        if token.classe != 'ERRO':
-            print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
-                           ['Linha', 'Classe', 'Lexema', 'Tipo'],
-                           tablefmt="grid"))
-
-        else:
-            print(tabulate([[str(nome_linha), *token.tabular_objeto()]],
-                           ['Linha', 'Classe', 'Lexema', 'Tipo'],
-                           tablefmt="grid"))
-            print("ERRO: Caractere inválido na linguagem, linha %s, coluna %s" % (nr_linha, final))
+        print(
+            colored("Linha: %s => Classe: %s, Lexema: \"%s\", Tipo: %s" % (
+                nome_linha, token.classe, '\\n' if token.lexema == '\n' else token.lexema.strip(), token.tipo), 'green'))
+        if token.classe.find('ERRO') != -1:
+            print(colored("%s: %s, linha %s, coluna %s " % (token.classe, mensagem, nr_linha, final), 'red',
+                          attrs=['bold']))
 
             # Pular para a pŕoxima linha caso ache erro
             # Se não tiver o break, ele procura erros na linha toda
             break
 
-
 token, index = analisador.scanner(eof=True)
-print(tabulate([['eof', *token.tabular_objeto()]], ['Linha', 'Classe', 'Lexema', 'Tipo'], tablefmt="grid"))
+print('-----------------------------------------------------------------------')
+print(
+    colored("Linha: %s => Classe: %s, Lexema: %s, Tipo: %s" % (
+        nr_linha + 1, token.classe, token.lexema.strip(), token.tipo
+    ), 'yellow', 'on_grey',
+            )
+)
 arquivo.close()
 # print(tokens)

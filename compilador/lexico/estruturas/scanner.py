@@ -156,7 +156,33 @@ class Scanner:
             'q20': 'FC_P',
             'q21': 'PT_V',
             'q22': 'Vir',
-            'q23': 'ERRO',
+        }
+
+        self.classificacao_erros = {
+            'q2': {
+                'classe': 'ERRO 1',
+                'mensagem': 'Não configura um número real',
+            },
+            'q4': {
+                'classe': 'ERRO 2',
+                'mensagem': 'Notação numérica incompleta',
+            },
+            'q5': {
+                'classe': 'ERRO 3',
+                'mensagem': 'Não inseriu o sinal'
+            },
+            'q7': {
+                'classe': 'ERRO 4',
+                'mensagem': 'Aspas não fechadas',
+            },
+            'q10': {
+                'classe': 'ERRO 5',
+                'mensagem': 'Comentário não fechado',
+            },
+            'q23': {
+                'classe': 'ERRO 6',
+                'mensagem': 'Caractere inválido na linguagem',
+            }
         }
 
     def get_tokens(self):
