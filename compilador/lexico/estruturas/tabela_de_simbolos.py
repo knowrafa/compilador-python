@@ -10,6 +10,7 @@ class TabelaDeSimbolos:
     # __token_ids = []
 
     def __init__(self):
+        # São as palavras reservadas do sistema
         self.__palavras_reservadas = [
             'inicio',
             'varinicio',
@@ -27,18 +28,15 @@ class TabelaDeSimbolos:
             'real'
         ]
 
+        # É o conjunto de tokens do tipo ID lidas no programa fonte
         self.__token_ids = {}
 
     def insercao(self, token):
-        self.__token_ids['identificador'] = token
+        # Insere o token ID no dicionário de IDS, usando como chave seu lexema
+        self.__token_ids[token.lexema] = token
 
-    def token_exists(self, identificador):
-        if self.__token_ids.get(identificador):
-            return self.__token_ids['identificador']
-        return False
-
-    def atualizacao(self):
-        pass
+    def token_id_exists(self, identificador):
+        return self.__token_ids.get(identificador, False)
 
     def get_palavras_reservadas(self):
         return self.__palavras_reservadas

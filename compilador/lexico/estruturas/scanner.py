@@ -132,7 +132,7 @@ class Scanner:
             'q22': {
                 'final': True,
             },
-            'erro': {
+            'q23': {
                 'final': True,
             },
         }

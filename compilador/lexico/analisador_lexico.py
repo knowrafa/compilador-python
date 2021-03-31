@@ -6,9 +6,6 @@ class AnalisadorLexico:
     def __init__(self):
         self.tabela_de_simbolos = TabelaDeSimbolos()
 
-    def executar_analisador(self):
-        pass
-
     @staticmethod
     def get_chave(caractere='', eof=False):
 
@@ -67,8 +64,6 @@ class AnalisadorLexico:
         estado_inicial = 'q0'
         estado_atual = estado_inicial
         scanner = Scanner()
-        # Procedimento para identificar qual o TOKEN
-        token = None
         primeiro_caractere = index
         ultimo_caractere = index
 
@@ -78,11 +73,9 @@ class AnalisadorLexico:
             estado_atual = proximo_estado
             if scanner.tabela_de_transicoes[estado_atual].get('final'):
                 tipo_token = scanner.classificacao_estados_finais.get(estado_atual)
-                lexema = palavra[primeiro_caractere:ultimo_caractere]
-
                 token = scanner.tokens.get(tipo_token)
                 token.lexema = 'EOF'
-                return token, ultimo_caractere
+                return token, ultimo_caractere, None
 
         tamanho = len(palavra)
         for posicao in range(index, tamanho):
@@ -105,7 +98,7 @@ class AnalisadorLexico:
                     tipo_token = scanner.classificacao_estados_finais.get(estado_atual)
                     lexema = palavra[primeiro_caractere:ultimo_caractere]
                     if tipo_token == 'id':
-                        token = self.tabela_de_simbolos.token_exists(identificador=lexema)
+                        token = self.tabela_de_simbolos.token_id_exists(identificador=lexema)
                         if not token:
                             token = scanner.tokens.get(tipo_token)
                             token.lexema = lexema
