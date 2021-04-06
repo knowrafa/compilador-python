@@ -42,6 +42,7 @@ class Scanner:
                 'divisao': 'q18',
                 'multiplicacao': 'q18',
                 'EOF': 'q12',
+                'erro': 'q23'
             },
             'q1': {
                 'final': True,
@@ -133,7 +134,7 @@ class Scanner:
                 'final': True,
             },
             'q23': {
-                'final': True,
+                'final': False,
             },
         }
 

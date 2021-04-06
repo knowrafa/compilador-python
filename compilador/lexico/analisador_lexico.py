@@ -53,7 +53,7 @@ class AnalisadorLexico:
                 chave = 'abre_chave'
             elif caractere == '}':
                 chave = 'fecha_chave'
-        elif caractere.isspace() or caractere=='\s' or not caractere.isprintable():
+        elif caractere.isspace() or caractere == '\s' or not caractere.isprintable():
             chave = 'espaco'
         else:
             chave = 'erro'
@@ -82,16 +82,17 @@ class AnalisadorLexico:
             caractere = palavra[posicao]
             chave = self.get_chave(caractere, eof=eof)
             ultimo_caractere += 1
-            if chave == 'erro':
-                lexema = palavra[primeiro_caractere:ultimo_caractere]
-                token = scanner.tokens.get('ERRO')
-                token.lexema = lexema
-                estado_atual = 'q23'
-                token.classe = scanner.classificacao_erros.get(estado_atual).get('classe')
-                mensagem = scanner.classificacao_erros.get(estado_atual).get('mensagem')
-                return token, ultimo_caractere, mensagem
 
             # Se retornar algo diferente de False, então existe a transição
+
+            # if chave == 'erro':
+            #     lexema = palavra[primeiro_caractere:ultimo_caractere]
+            #     token = scanner.tokens.get('ERRO')
+            #     token.lexema = lexema
+            #     estado_atual = 'q23'
+            #     token.classe = scanner.classificacao_erros.get(estado_atual).get('classe')
+            #     mensagem = scanner.classificacao_erros.get(estado_atual).get('mensagem')
+            #     return token, ultimo_caractere, mensagem
 
             def verificando_token():
                 if scanner.tabela_de_transicoes[estado_atual].get('final'):
@@ -110,9 +111,9 @@ class AnalisadorLexico:
                 else:
                     lexema = palavra[primeiro_caractere:ultimo_caractere]
                     token = scanner.tokens.get('ERRO')
-                    token.classe = scanner.classificacao_erros.get(estado_atual).get('classe')
+                    token.classe = scanner.classificacao_erros.get(estado_atual, 'q23').get('classe')
                     token.lexema = lexema
-                    mensagem = scanner.classificacao_erros.get(estado_atual).get('mensagem')
+                    mensagem = scanner.classificacao_erros.get(estado_atual, 'q23').get('mensagem')
                     return token, ultimo_caractere, mensagem
 
             proximo_estado = scanner.tabela_de_transicoes[estado_atual].get(chave, False)

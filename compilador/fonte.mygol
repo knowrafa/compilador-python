@@ -1,3 +1,4 @@
+aaa@
 inicio
     varinicio
     A lit;
@@ -5,7 +6,7 @@ inicio
     D inteiro;
     C real;
     varfim;
-    @@escreva ".........";
+    esc@reva ".........";
     leia B; @
     escreva "......";
     leia A;

@@ -23,7 +23,7 @@ for linha in arquivo:
         pass
 '''
 linha = ""
-arquivo = open('erro.mygol', 'r')
+arquivo = open('fonte.mygol', 'r')
 tokens = []
 nr_linha = 0
 
@@ -49,7 +49,6 @@ for linha in arquivo:
 
             # Pular para a pŕoxima linha caso ache erro
             # Se não tiver o break, ele procura erros na linha toda
-            break
 
 token, index, _ = analisador.scanner(eof=True)
 print('-----------------------------------------------------------------------')
