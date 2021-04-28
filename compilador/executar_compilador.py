@@ -3,9 +3,13 @@ from termcolor import colored
 import coloredlogs
 from tabulate import tabulate
 
+from compilador.sintatico.pilha import Pilha
 from lexico import AnalisadorLexico
+from sintatico import AnalisadorSintatico
 
-analisador = AnalisadorLexico()
+analisador_lexico = AnalisadorLexico()
+analisador_sintatico = AnalisadorSintatico()
+
 
 # arquivo = open('entrada.txt', 'rb')
 i = 0
@@ -16,7 +20,7 @@ for linha in arquivo:
     try:
         index = 0
         while index < len(linha):
-            token, index = analisador.scanner(linha, index)
+            token, index = analisador_lexico.scanner(linha, index)
             tokens.append(token)
     except NameError():
         # print("ERRO na linha " + i)
@@ -35,7 +39,26 @@ for linha in arquivo:
 
     while index < len(linha):
         comeco = index
-        token, index, mensagem = analisador.scanner(palavra=linha, index=index)
+        token, index, mensagem = analisador_lexico.scanner(palavra=linha, index=index)
+        # Aqui eu recebo o token
+
+        a = token # meu token puxado
+        a.classe # tenho id
+        coluna = analisador_sintatico.tabela.tabela_acao[0].index(a.classe)
+        topo_pilha = analisador_sintatico.pilha.pilha[-1]
+        celula = analisador_sintatico.tabela.tabela_acao[topo_pilha+1][coluna]
+        if celula[0] == 's':
+            analisador_sintatico.pilha.empilha(celula[1])
+        elif celula[0] == 'r':
+            analisador_sintatico.pilha.desempilha()
+
+        # if celula == ('s')
+
+
+
+
+
+
         final = index
         nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
         print('-----------------------------------------------------------------------')
@@ -50,7 +73,7 @@ for linha in arquivo:
             # Pular para a pŕoxima linha caso ache erro
             # Se não tiver o break, ele procura erros na linha toda
 
-token, index, _ = analisador.scanner(eof=True)
+token, index, _ = analisador_lexico.scanner(eof=True)
 print('-----------------------------------------------------------------------')
 print(
     colored("Linha: %s => Classe: %s, Lexema: %s, Tipo: %s" % (

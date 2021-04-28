@@ -29,7 +29,22 @@ class TabelaDeSimbolos:
         ]
 
         # É o conjunto de tokens do tipo ID lidas no programa fonte
-        self.__token_ids = {}
+        self.__token_ids = {
+            'inicio': TOKEN(classe='inicio', lexema='inicio'),
+            'varinicio': TOKEN(classe='varinicio', lexema='varinicio'),
+            'varfim': TOKEN(classe='varfim', lexema='varfim'),
+            'escreva': TOKEN(classe='escreva', lexema='escreva'),
+            'leia': TOKEN(classe='leia', lexema='leia'),
+            'se': TOKEN(classe='se', lexema='se'),
+            'entao': TOKEN(classe='entao', lexema='entao'),
+            'fimse': TOKEN(classe='fimse', lexema='fimse'),
+            'facaate': TOKEN(classe='facaAte', lexema='facaAte'),
+            'fimfaca': TOKEN(classe='fimfaca', lexema='fimfaca'),
+            'fim': TOKEN(classe='fim', lexema='fim'),
+            'inteiro': TOKEN(classe='inteiro', lexema='inteiro'),
+            'lit': TOKEN(classe='lit', lexema='lit'),
+            'real': TOKEN(classe='real', lexema='real')
+        }
 
     def insercao(self, token):
         # Insere o token ID no dicionário de IDS, usando como chave seu lexema
