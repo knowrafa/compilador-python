@@ -38,8 +38,8 @@ class TabelaDeSimbolos:
             'se': TOKEN(classe='se', lexema='se'),
             'entao': TOKEN(classe='entao', lexema='entao'),
             'fimse': TOKEN(classe='fimse', lexema='fimse'),
-            'facaate': TOKEN(classe='facaAte', lexema='facaAte'),
-            'fimfaca': TOKEN(classe='fimfaca', lexema='fimfaca'),
+            'facaAte': TOKEN(classe='facaAte', lexema='facaAte'),
+            'fimFaca': TOKEN(classe='fimfaca', lexema='fimfaca'),
             'fim': TOKEN(classe='fim', lexema='fim'),
             'inteiro': TOKEN(classe='inteiro', lexema='inteiro'),
             'lit': TOKEN(classe='lit', lexema='lit'),
@@ -48,10 +48,10 @@ class TabelaDeSimbolos:
 
     def insercao(self, token):
         # Insere o token ID no dicionário de IDS, usando como chave seu lexema
-        self.__token_ids[token.lexema] = token
+        self.__token_ids[token.lexema.strip()] = token
 
     def token_id_exists(self, identificador):
-        return self.__token_ids.get(identificador, False)
+        return self.__token_ids.get(identificador.strip(), False)
 
     def get_palavras_reservadas(self):
         return self.__palavras_reservadas

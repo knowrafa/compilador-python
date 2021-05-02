@@ -6,3 +6,6 @@ class Pilha:
 
     def desempilha(self):
         self.pilha.pop()
+
+    def topo(self):
+        return self.pilha[-1]

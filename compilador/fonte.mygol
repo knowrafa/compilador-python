@@ -4,16 +4,17 @@ inicio
     B inteiro;
     D inteiro;
     C real;
+    Y inteiro;
     varfim;
-    esc@reva ".........";
-    leia B; @
+    escreva ".........";
+    leia B;
     escreva "......";
     leia A;
-    se(B>2.e)
+    se(B>2)
         entao
         se(B<=4)
-        entao
-        escreva ".......";
+            entao
+            escreva ".......";
         fimse
     fimse
     B<-B+1;
