@@ -44,12 +44,13 @@ for linha in arquivo:
         if a.classe == '\s':
             continue
 
-        if a.classe == 'fimse':
-            print("OOI")
+        if a.classe == "RCB":
+            pass
+
         while True:
             coluna = analisador_sintatico.tabela.tabela_acao[0].index(a.classe)
             topo_pilha = analisador_sintatico.pilha.pilha[-1]
-            celula = analisador_sintatico.tabela.tabela_acao[topo_pilha+1][coluna]
+            celula = analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][coluna]
             if not celula:
                 pass
             elif celula[0] == 's':
@@ -61,21 +62,20 @@ for linha in arquivo:
                 # Se a célula tiver reduce no começo da palavra
                 numero = int(celula[1:]) + 1
                 regra = analisador_sintatico.gramatica.gramatica[numero]
-
-                print(f"Desempilhando {regra.get('cardinalidade')} estado(s)")
+                # print(f"pilha: {analisador_sintatico.pilha.pilha}")
+                # print(f"Desempilhando {regra.get('cardinalidade')} estado(s)")
 
                 for i in range(0, regra.get('cardinalidade')):
-                    if numero == 25:
-                        pass
                     analisador_sintatico.pilha.desempilha()
 
                 topo = analisador_sintatico.pilha.topo()
                 coluna = analisador_sintatico.tabela.tabela_goto[0].index(regra.get('key'))
                 celula = analisador_sintatico.tabela.tabela_goto[topo + 1][coluna]
+                # print(f"pilha: {analisador_sintatico.pilha.pilha}")
                 analisador_sintatico.pilha.empilha(int(celula))
+                # print(f"pilha: {analisador_sintatico.pilha.pilha}")
 
-
-                print(regra.get('key') + ' -> ' + regra.get('regra'))
+                print(str(numero) + ' - ' + regra.get('key') + ' -> ' + regra.get('regra'))
 
         # if celula == ('s')
 
@@ -93,6 +93,35 @@ for linha in arquivo:
 
             # Pular para a pŕoxima linha caso ache erro
             # Se não tiver o break, ele procura erros na linha toda
+
+while True:
+    coluna = analisador_sintatico.tabela.tabela_acao[0].index('$')
+    topo_pilha = analisador_sintatico.pilha.pilha[-1]
+    celula = analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][coluna]
+    if celula == 'acc':
+        regra = analisador_sintatico.gramatica.gramatica[topo_pilha]
+        print(str(topo_pilha) + ' - ' +regra.get('key') + ' -> ' + regra.get('regra'))
+        break
+    elif not celula:
+        pass
+    elif celula[0] == 'r':
+        # Se a célula tiver reduce no começo da palavra
+        numero = int(celula[1:]) + 1
+        regra = analisador_sintatico.gramatica.gramatica[numero]
+        # print(f"pilha: {analisador_sintatico.pilha.pilha}")
+        # print(f"Desempilhando {regra.get('cardinalidade')} estado(s)")
+
+        for i in range(0, regra.get('cardinalidade')):
+            analisador_sintatico.pilha.desempilha()
+
+        topo = analisador_sintatico.pilha.topo()
+        coluna = analisador_sintatico.tabela.tabela_goto[0].index(regra.get('key'))
+        celula = analisador_sintatico.tabela.tabela_goto[topo + 1][coluna]
+        # print(f"pilha: {analisador_sintatico.pilha.pilha}")
+        analisador_sintatico.pilha.empilha(int(celula))
+        # print(f"pilha: {analisador_sintatico.pilha.pilha}")
+
+        print(str(numero) + ' - ' + regra.get('key') + ' -> ' + regra.get('regra'))
 
 token, index, _ = analisador_lexico.scanner(eof=True)
 print('-----------------------------------------------------------------------')

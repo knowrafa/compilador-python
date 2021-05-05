@@ -1,7 +1,7 @@
 class Gramatica:
     gramatica = {
         1: {
-            "key": "P_linha",
+            "key": "P\'",
             "regra": "P",
             "cardinalidade": 1,
         },
@@ -88,7 +88,7 @@ class Gramatica:
             "cardinalidade": 1,
         },
         18: {
-            "key": "ARG",
+            "key": "A",
             "regra": "CMD A",
             "cardinalidade": 2,
         },
