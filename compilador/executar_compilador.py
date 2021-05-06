@@ -44,15 +44,21 @@ for linha in arquivo:
         if a.classe == '\s':
             continue
 
-        if a.classe == "RCB":
-            pass
-
         while True:
             coluna = analisador_sintatico.tabela.tabela_acao[0].index(a.classe)
             topo_pilha = analisador_sintatico.pilha.pilha[-1]
             celula = analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][coluna]
             if not celula:
+                break
                 pass
+            elif celula[0] == 'e':
+                mensagem = analisador_sintatico.tabela.obter_erro(int(celula[1:]))
+                final = index
+                nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
+                print(colored("%s, linha %s, coluna %s " % (mensagem, nr_linha, final), 'red',
+                              attrs=['bold']))
+
+                break
             elif celula[0] == 's':
                 # Se a célula tiver shift no começo da palavra
                 analisador_sintatico.pilha.empilha(int(celula[1:]))
@@ -100,10 +106,18 @@ while True:
     celula = analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][coluna]
     if celula == 'acc':
         regra = analisador_sintatico.gramatica.gramatica[topo_pilha]
-        print(str(topo_pilha) + ' - ' +regra.get('key') + ' -> ' + regra.get('regra'))
+        print(str(topo_pilha) + ' - ' + regra.get('key') + ' -> ' + regra.get('regra'))
         break
     elif not celula:
-        pass
+        break
+    elif celula[0] == 'e':
+        mensagem = analisador_sintatico.tabela.obter_erro(int(celula[1:]))
+        final = index
+        nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
+        print(colored("%s, linha %s, coluna %s " % (mensagem, nr_linha, final), 'red',
+                      attrs=['bold']))
+
+        break
     elif celula[0] == 'r':
         # Se a célula tiver reduce no começo da palavra
         numero = int(celula[1:]) + 1
