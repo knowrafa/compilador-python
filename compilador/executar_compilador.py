@@ -29,35 +29,46 @@ linha = ""
 arquivo = open('fonte.mygol', 'r')
 tokens = []
 nr_linha = 0
-
+erro = []
 logger = logging.getLogger(__name__)
 # coloredlogs.install(level='DEBUG', logger=logger)
 for linha in arquivo:
     nr_linha += 1
     index = 0
-
     while index < len(linha):
         comeco = index
         token, index, mensagem = analisador_lexico.scanner(palavra=linha, index=index)
 
-        a = token
-        if a.classe == '\s':
+        # if celula == ('s')
+
+        final = index
+
+        if token.classe.find('ERRO') != -1:
+            print(colored("%s: %s, linha %s, coluna %s " % (token.classe, mensagem, nr_linha, final), 'red',
+                          attrs=['bold']))
             continue
 
         while True:
-            coluna = analisador_sintatico.tabela.tabela_acao[0].index(a.classe)
+            if token.classe == '\s':
+                break
+            if erro:
+                if token.classe in erro:
+                    erro = []
+                else:
+                    break
+
+            coluna = analisador_sintatico.tabela.tabela_acao[0].index(token.classe)
             topo_pilha = analisador_sintatico.pilha.pilha[-1]
             celula = analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][coluna]
             if not celula:
-                break
-                pass
-            elif celula[0] == 'e':
-                mensagem = analisador_sintatico.tabela.obter_erro(int(celula[1:]))
-                final = index
-                nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
-                print(colored("%s, linha %s, coluna %s " % (mensagem, nr_linha, final), 'red',
-                              attrs=['bold']))
-
+                erro = []
+                for col in range(0, len(analisador_sintatico.tabela.tabela_acao[topo_pilha + 1])):
+                    if analisador_sintatico.tabela.tabela_acao[topo_pilha + 1][col]:
+                        nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
+                        print(colored("Esperava %s, linha %s, coluna %s " % (
+                            analisador_sintatico.tabela.tabela_acao[0][col], nr_linha-1, final), 'red',
+                                      attrs=['bold']))
+                        erro.append(analisador_sintatico.tabela.tabela_acao[0][col])
                 break
             elif celula[0] == 's':
                 # Se a célula tiver shift no começo da palavra
@@ -77,15 +88,10 @@ for linha in arquivo:
                 topo = analisador_sintatico.pilha.topo()
                 coluna = analisador_sintatico.tabela.tabela_goto[0].index(regra.get('key'))
                 celula = analisador_sintatico.tabela.tabela_goto[topo + 1][coluna]
-                # print(f"pilha: {analisador_sintatico.pilha.pilha}")
                 analisador_sintatico.pilha.empilha(int(celula))
-                # print(f"pilha: {analisador_sintatico.pilha.pilha}")
 
                 print(str(numero) + ' - ' + regra.get('key') + ' -> ' + regra.get('regra'))
 
-        # if celula == ('s')
-
-        final = index
         nome_linha = "%s: (%s-%s)" % (nr_linha, comeco, final)
         print('-----------------------------------------------------------------------')
 
@@ -93,12 +99,6 @@ for linha in arquivo:
             colored("Linha: %s => Classe: %s, Lexema: \"%s\", Tipo: %s" % (
                 nome_linha, token.classe, '\\n' if token.lexema == '\n' else token.lexema.strip(), token.tipo),
                     'green'))
-        if token.classe.find('ERRO') != -1:
-            print(colored("%s: %s, linha %s, coluna %s " % (token.classe, mensagem, nr_linha, final), 'red',
-                          attrs=['bold']))
-
-            # Pular para a pŕoxima linha caso ache erro
-            # Se não tiver o break, ele procura erros na linha toda
 
 while True:
     coluna = analisador_sintatico.tabela.tabela_acao[0].index('$')

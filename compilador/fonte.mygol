@@ -1,15 +1,12 @@
 inicio
     varinicio
         A lit;
-        B inteiro;
-        D inteiro;
-        C real;
-    varfim;
+    varfim
     escreva "...";
-    leia ;
+    @leia A;
     escreva "...";
     leia A;
-    se(B>2)
+    se(C > 2)
         entao
             se(B<=4)
                 entao
@@ -24,6 +21,6 @@ inicio
     escreva "";
     escreva "";
     escreva "";
-    escreva A;
+    escreva "";
 fim
 
