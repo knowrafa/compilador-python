@@ -1,26 +1,26 @@
 inicio
     varinicio
-        A lit;
-    varfim
-    escreva "...";
-    @leia A;
-    escreva "...";
+        lit Y;
+        inteiro B;
+        real A;
+        real C;
+        inteiro D;
+    varfim;
+    escreva "ola";
     leia A;
-    se(C > 2)
+    leia B;
+    se(B>2)
         entao
-            se(B<=4)
-                entao
-                escreva "...";
-            fimse
+        se(B<=4)
+            entao
+            escreva "...";
+        fimse
     fimse
     B<-B+1;
     B<-B+2;
     B<-B+3;
     D<-B;
-    C<-5.0;
+    C<-5;
     escreva "";
-    escreva "";
-    escreva "";
-    escreva "";
+    escreva D;
 fim
-

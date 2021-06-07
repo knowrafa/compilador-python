@@ -39,7 +39,7 @@ class TabelaDeSimbolos:
             'entao': TOKEN(classe='entao', lexema='entao'),
             'fimse': TOKEN(classe='fimse', lexema='fimse'),
             'facaAte': TOKEN(classe='facaAte', lexema='facaAte'),
-            'fimFaca': TOKEN(classe='fimfaca', lexema='fimfaca'),
+            'fimFaca': TOKEN(classe='fimFaca', lexema='fimFaca'),
             'fim': TOKEN(classe='fim', lexema='fim'),
             'inteiro': TOKEN(classe='inteiro', lexema='inteiro'),
             'lit': TOKEN(classe='lit', lexema='lit'),
@@ -58,3 +58,7 @@ class TabelaDeSimbolos:
 
     def get_token_ids(self):
         return self.__token_ids
+
+    def definir_tipo_token_id(self, chave, tipo):
+        self.__token_ids[chave].tipo = tipo
+        return self.__token_ids[chave]

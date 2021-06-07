@@ -1,0 +1,1 @@
+from .analisador_semantico import AnalisadorSemantico

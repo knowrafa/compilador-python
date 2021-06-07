@@ -27,7 +27,7 @@ class Gramatica:
         },
         6: {
             "key": "D",
-            "regra": "L TIPO;",
+            "regra": "TIPO L;",
             "cardinalidade": 3,
         },
         7: {

@@ -76,6 +76,11 @@ class Scanner:
             'q7': {
                 'final': False,
                 'ponto': 'q7',
+                'letra': 'q7',
+                'letra_e': 'q7',
+                '\s': 'q7',
+                'espaco': 'q7',
+                'digito': 'q7',
                 'aspa': 'q8',
             },
             'q8': {
